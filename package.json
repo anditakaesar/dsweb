@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx babel -d ./dist ./src -s",
     "start:dev": "nodemon --exec babel-node ./src/index.js --ignore ./static/",
-    "start": "npm run build && node dist/index.js"
+    "start": "node dist/index.js"
   },
   "keywords": [
     "web",
