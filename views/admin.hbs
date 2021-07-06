@@ -1,0 +1,58 @@
+{{> navlogin}}
+<div class="container mb-5">
+  <div class="row">
+    <div class="col">
+      <h1>Admin Page</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div id="userEdit" class="col-lg-6 table-responsive">
+      <img src="/assets/loading.gif" style="width: 20%;">
+    </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="mb-3" hidden>
+            <label for="userid" class="form-label">UserId</label>
+            <input type="text" class="form-control" id="userid" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" onkeyup="CheckEqual();">
+            <div class="form-text form-check">
+              <input type="checkbox" class="form-check-input" id="showpassword" onclick="TogglePassword();"
+                tabindex="-1">
+              <label class="form-check-label" for="showpassword">Show Password</label>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="passwordConfirm" onkeyup="CheckEqual();">
+            <div class="form-text text-danger" role="alert" id="passwordConfirmWarn">
+              Password is not equal
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button id="btnSaveCreate" type="button" class="btn btn-primary" onclick="SaveUser();">Save changes</button>
+          <button id="btnCancel" type="button" class="btn btn-warning" onclick="CancelEdit();">Cancel</button>
+          <button id="btnDelete" type="button" class="btn btn-danger" onclick="DeleteUser();" hidden>Delete</button>
+          <div id="alertModal" class="alert alert-primary alert-dismissible fade show mt-3" role="alert" hidden="true">
+            <span id="alertMessage"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div id="alertCol" class="col">
+    </div>
+  </div>
+</div>
+<script src="/scripts/admin/bundle.js"></script>
