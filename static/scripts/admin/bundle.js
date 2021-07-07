@@ -104,14 +104,14 @@ function SetMessage(msg, type='primary') {
 }
 
 function IsFormValid() {
+  let u = $('#username').val()
   let p = $('#password').val()
   let c = $('#passwordConfirm').val()
-  let w = $('#passwordConfirmWarn').val()
 
-  if (p === "" || c === "" || w === "") {
+  if (u === "" || p === "" || c === "") {
     return false;
   } else {
-    if (p != w) {
+    if (p != c) {
       return false;
     }
     return true;
