@@ -96,13 +96,6 @@ function CancelEdit() {
   DisableForm();
 }
 
-function SetMessage(msg, type='primary') {
-  let tpl = '<div class="alert alert-{{type}} alert-primary fade show mt-3" role="alert">{{msg}}</div>';
-  let template = Handlebars.compile(tpl);
-  let fullHtml = template({ msg: msg, type: type});
-  $('#alertCol').html(fullHtml);
-}
-
 function IsFormValid() {
   let u = $('#username').val()
   let p = $('#password').val()
