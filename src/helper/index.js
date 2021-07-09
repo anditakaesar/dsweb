@@ -8,10 +8,11 @@ import routerAuth from '../routers/auth'
 import editRouter from '../routers/edit'
 import db, { sessionStorage } from './db'
 import { ALERT } from './css/alert'
+import migrationRouter from '../routers/migration'
 
 const routers = {
   api, routerAdmin, routerAuth,
-  editRouter,
+  editRouter, migrationRouter,
 }
 
 const funct = {

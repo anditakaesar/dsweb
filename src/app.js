@@ -64,6 +64,7 @@ app.use('/api', checkSessionApi, routers.api)
 app.use('/admin', checkSession, routers.routerAdmin)
 app.use('/edit', checkSession, routers.editRouter)
 app.use('/auth', routers.routerAuth)
+app.use('/migration', routers.migrationRouter)
 
 app.get('/', loginRoute)
 

@@ -4,10 +4,11 @@ export const SESSION_NAME = process.env.SESSION_NAME || '_ab61dcpz8e7'
 export const SESSION_AGESEC = parseInt(process.env.SESSION_AGESEC, 10) || 86400
 export const COOKIES_SECRET = process.env.COOKIES_SECRET || 'sshhhhhhh'
 export const SALT_HASH = 11
+export const MIGRATION_KEY = process.env.MIGRATION_KEY || 'dswebmigration'
 
 export const env = {
   NODE_ENV, PORT, SESSION_NAME, SESSION_AGESEC, COOKIES_SECRET,
-  SALT_HASH,
+  SALT_HASH, MIGRATION_KEY,
 }
 
 export default env
