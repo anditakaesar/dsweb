@@ -31,8 +31,12 @@ router.get('/', (req, res, next) => {
   }
 }, (req, res, next) => {
   process.nextTick(() => {
+    let migrations = []
     umzug.up()
-      .then((migrations) => {
+      .then((mgs) => {
+        mgs.forEach((v, i) => {
+          migrations.push(v.file)
+        })
         logger.info('migration complete', {
           migrations,
         })
