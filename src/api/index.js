@@ -2,10 +2,12 @@ import { Router } from 'express'
 import helper from '../helper'
 import bcrypt from 'bcrypt'
 import userRouter from './user'
+import configRouter from './config.api'
 
 const api = Router()
 
 api.use('/user', userRouter)
+api.use('/config', configRouter)
 
 api.get('/', (req, res) => {
   res.status(200).json({

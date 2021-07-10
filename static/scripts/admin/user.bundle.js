@@ -43,7 +43,6 @@ function EditUser(userid) {
     if (result !== undefined) {
       EnableForm();
       FillEdit(result.user);
-      $('#editusermodal').modal('show');
     }
   })
 }
@@ -58,7 +57,7 @@ function SaveUser() {
       password: $('#password').val(),
       passwordConfirm: $('#passwordConfirm').val(),
     }
-    $.post('/api/user/' + updatedUser.id, updatedUser, updatedUser)
+    $.post('/api/user/' + updatedUser.id, updatedUser)
       .done(function (data) {
         ClearEdit();
         LoadAllUser();
@@ -80,11 +79,6 @@ function EnableForm() {
   FormIds.forEach(function(v, i) {
     $(`#${v}`).prop('disabled', false);
   })
-}
-
-function ShowMessage(msg) {
-  $('#alertMessage').text(msg);
-  $('#alertModal').prop('hidden', false);
 }
 
 function SetLoading() {

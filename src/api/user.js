@@ -66,7 +66,6 @@ userRouter.post('/:id', (req, res) => {
       where: { id: req.params.id },
     })
     .then((user) => {
-      console.log(req.body)
       // update
       if (req.body.password != req.body.passwordConfirm) {
         throw new Error('Password and Confirm Password must be same!');
