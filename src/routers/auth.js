@@ -55,6 +55,7 @@ routerAuth.post('/login', fieldCheck, (req, res, next) => {
           if (validatePassword(req.body.password, user.password)) {
             req.session.user = {
               authenticated: true,
+              id: user.id,
               username: user.username,
               role: user.role,
             }

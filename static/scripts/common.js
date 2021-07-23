@@ -6,3 +6,7 @@ function SetMessage(msg, type = 'primary') {
     $('#alertCol').html(fullHtml);
   }
 }
+
+function FormatISODate(rawDate) {
+  return moment(rawDate).format();
+}

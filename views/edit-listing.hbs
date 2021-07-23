@@ -1,0 +1,180 @@
+{{> navlogin}}
+<div class="container mb-5">
+  <div class="row">
+    <div class="col">
+      <h1>List Entry Perjalanan Dinas</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div id="alertCol" class="col">
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col">
+      <h2>Filter</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="mb-2">
+        <label for="filterNomor" class="form-label">No</label>
+        <input type="text" class="form-control" id="filterNomor">
+      </div>
+    </div>
+
+    <div class="col-lg-3">
+      <div class="mb-2">
+        <label for="filterName" class="form-label">Nama</label>
+        <input type="text" class="form-control" id="filterName">
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="mb-2">
+        <label for="filterDateFrom" class="form-label">Tanggal Dinas</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="filterDateFrom" placeholder="Dari">
+          <div class="input-group-text">sampai</div>
+          <input type="text" class="form-control" id="filterDateTo" placeholder="Sampai">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="mb-2">
+        <button id="btnFilterClear" type="button" class="btn btn-warning" type="button"
+          onclick="ClearFilterFields();">Clear</button>
+        <button id="btnEditSave" type="button" class="btn btn-primary" type="button"
+          onclick="SearchEntry();">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col">
+      <h2>Master Data</h2>
+    </div>
+  </div>
+
+  <div class="row table-responsive">
+
+    <table id="tableEntry" class="col table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Sel</th>
+          <th scope="col">Nomor Dok</th>
+          <th scope="col">Nama</th>
+          <th scope="col">Tanggal Dinas</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+    </table>
+
+  </div>
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="mb-2">
+        <button id="btnSaveToPDF" type="button" class="btn btn-primary" type="button"
+          onclick="SaveToPDF();">Save To PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" hidden>
+    <div class="col-lg-6 offset-lg-3">
+      <div class="mb-2">
+        <label for="granteeName" class="form-label">Nomor</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="numPrefix" placeholder="000">
+          <input type="text" class="form-control" id="numMiddle" placeholder="XX" value="/ST-DIR/" disabled readonly>
+          <input type="text" class="form-control" id="numPostfix" placeholder="XX" disabled readonly>
+          <input type="text" class="form-control" id="numYear" placeholder="YYYY" disabled readonly>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col">
+      <h2>Edit Data</h2>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-lg-6">
+      <div class="mb-2">
+        <label for="grantorName" class="form-label">Pejabat yang Berwenang Memberikan Izin</label>
+        <input type="text" class="form-control" id="grantorName">
+      </div>
+      <div class="mb-2">
+        <label for="granteeName" class="form-label">Nama dan Jabatan Diperintah</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="granteeName" placeholder="Nama">
+          <input type="text" class="form-control" id="granteePosition" placeholder="Jabatan">
+        </div>
+      </div>
+      <div class="mb-2">
+        <label for="travelDeparture" class="form-label">Tempat Berangkat</label>
+        <input type="text" class="form-control" id="travelDeparture">
+      </div>
+      <div class="mb-2">
+        <label for="travelDestination" class="form-label">Tempat Tujuan</label>
+        <input type="text" class="form-control" id="travelDestination">
+      </div>
+      <div class="mb-2">
+        <label for="travelType" class="form-label">Jenis Perjalanan Dinas</label>
+        <input type="text" class="form-control" id="travelType">
+      </div>
+      <div class="mb-2">
+        <label for="travelArrival" class="form-label">Datang di</label>
+        <div class="input-group">
+          <input type="text" class="form-control w-50" id="travelArrival" placeholder="Tempat">
+          <input type="text" class="form-control w-50" id="travelArrivalDate" placeholder="Tanggal">
+        </div>
+      </div>
+
+    </div>
+    <div class="col-lg-6">
+      <div class="mb-2">
+        <label for="travelReason" class="form-label">Maksud Perjalanan</label>
+        <textarea type="text" class="form-control" id="travelReason" rows="3"></textarea>
+      </div>
+      <div class="mb-2">
+        <label for="travelDate" class="form-label">Tanggal Perjalanan Dinas</label>
+        <input type="text" class="form-control w-50" id="travelDate">
+      </div>
+      <div class="mb-2">
+        <label for="travelLength" class="form-label">Lama Perjalanan</label>
+        <div class="input-group w-50">
+          <input type="text" class="form-control" id="travelLength">
+          <div class="input-group-text">Hari</div>
+        </div>
+      </div>
+      <div class="mb-2">
+        <label for="guarantorName" class="form-label">Penanggung Perjalanan Dinas</label>
+        <input type="text" class="form-control" id="guarantorName">
+      </div>
+      <div class="mb-2">
+        <label for="otherInfo" class="form-label">Keterangan Lain-lain</label>
+        <textarea type="text" class="form-control" id="otherInfo" rows="3"></textarea>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="row mb-3">
+    <div class="offset-lg-6 col-lg-6">
+      <button id="btnEditClear" type="button" class="btn btn-warning" type="button"
+        onclick="ClearFields();">Clear</button>
+      <button id="btnEditSave" type="button" class="btn btn-primary" type="button"
+        onclick="SaveEditEntry();">Save</button>
+    </div>
+  </div>
+
+</div>
+<script src="/scripts/staff/staff.bundle.js"></script>

@@ -26,4 +26,13 @@ editRouter.get('/', (req, res) => {
   })
 })
 
+editRouter.get('/list', (req, res) => {
+  res.render('edit-listing', {
+    data: {
+      ...res.data,
+      user: req.session.user,
+    }
+  })
+})
+
 export default editRouter
