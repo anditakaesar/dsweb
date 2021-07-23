@@ -57,8 +57,9 @@ routerAuth.post('/login', fieldCheck, (req, res, next) => {
               authenticated: true,
               id: user.id,
               username: user.username,
-              role: user.role,
+              role: user.role
             }
+            req.session.user[user.role] = true
             res.redirect('/admin')
           } else {
             res.data.message_type = ALERT.DANGER
