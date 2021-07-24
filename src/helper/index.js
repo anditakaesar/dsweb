@@ -9,6 +9,7 @@ import editRouter from '../routers/edit'
 import db, { sessionStorage } from './db'
 import { ALERT } from './css/alert'
 import migrationRouter from '../routers/migration'
+import FormatEntry from './entry'
 
 const validValue = (val) => {
   return (val != '' && val != undefined)
@@ -20,7 +21,7 @@ const routers = {
 }
 
 const funct = {
-  checkSession, checkSessionApi, validValue
+  checkSession, checkSessionApi, validValue, FormatEntry
 }
 
 const css = {
