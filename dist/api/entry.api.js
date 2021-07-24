@@ -13,42 +13,17 @@ var _helper = _interopRequireDefault(require("../helper"));
 
 var _sequelize = require("sequelize");
 
+var _entry = _interopRequireDefault(require("../helper/entry"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var entryRouter = (0, _express.Router)();
 var Entry = _db["default"].Entry;
-
-function FormatEntry(ent) {
-  var newEntry = {};
-  newEntry.id = ent.id;
-  newEntry.grantorName = ent.grantorName;
-  newEntry.granteeName = ent.granteeName;
-  newEntry.granteePosition = ent.granteePosition;
-  newEntry.travelDeparture = ent.travelDeparture;
-  newEntry.travelDestination = ent.travelDestination;
-  newEntry.travelType = ent.travelType;
-  newEntry.travelReason = ent.travelReason;
-  newEntry.travelArrival = ent.travelArrival;
-  newEntry.travelArrivalDate = ent.travelArrivalDate;
-  newEntry.travelDate = ent.travelDate;
-  newEntry.travelLength = ent.travelLength;
-  newEntry.guarantorName = ent.guarantorName;
-  newEntry.otherInfo = ent.otherInfo;
-  newEntry.numPrefix = ent.numPrefix;
-  newEntry.numMiddle = ent.numMiddle;
-  newEntry.numPostfix = ent.numPostfix;
-  newEntry.numYear = ent.numYear;
-  newEntry.numCombined = ent.numCombined == undefined || ent.numCombined == "" ? ent.numPrefix + ent.numMiddle + ent.numPostfix + ent.numYear : ent.numCombined;
-  newEntry.userId = ent.userId;
-  newEntry.empty = '';
-  return newEntry;
-}
-
 entryRouter.post('/', function (req, res) {
   process.nextTick(function () {
-    var newEntry = FormatEntry(req.body);
+    var newEntry = (0, _entry["default"])(req.body);
     newEntry.userId = req.session.user.id;
     delete newEntry.id;
     delete newEntry.empty;
@@ -56,7 +31,7 @@ entryRouter.post('/', function (req, res) {
       res.json({
         message: 'save success',
         messageType: 'success',
-        data: FormatEntry(ent)
+        data: (0, _entry["default"])(ent)
       });
     })["catch"](function (err) {
       res.json({
@@ -71,7 +46,7 @@ entryRouter.get('/all', function (req, res) {
     Entry.findAndCountAll().then(function (results) {
       var entries = [];
       results.rows.forEach(function (entry, i) {
-        entries.push(FormatEntry(entry));
+        entries.push((0, _entry["default"])(entry));
       });
       res.json({
         message: 'all entries loaded',
@@ -140,7 +115,7 @@ entryRouter.post('/dt', function (req, res) {
       order: order
     }).then(function (data) {
       data.rows.forEach(function (v, i) {
-        results.push(FormatEntry(v));
+        results.push((0, _entry["default"])(v));
       }); // console.log('ENTRY', results)
 
       res.json({
@@ -159,7 +134,7 @@ entryRouter.post('/dt', function (req, res) {
 });
 entryRouter.post('/:id', function (req, res) {
   process.nextTick(function () {
-    var editedEntry = FormatEntry(req.body);
+    var editedEntry = (0, _entry["default"])(req.body);
     editedEntry.userId = req.session.user.id;
     delete editedEntry.id;
     delete editedEntry.empty;
@@ -181,7 +156,7 @@ entryRouter.post('/:id', function (req, res) {
 entryRouter.get('/:id', function (req, res) {
   process.nextTick(function () {
     Entry.findByPk(req.params.id).then(function (entry) {
-      var data = FormatEntry(entry);
+      var data = (0, _entry["default"])(entry);
       res.json({
         message: 'entry loaded',
         messageType: 'primary',
