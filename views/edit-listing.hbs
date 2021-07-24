@@ -10,91 +10,87 @@
     </div>
   </div>
 
-  <div class="row mt-5">
-    <div class="col">
-      <h2>Filter</h2>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-3">
-      <div class="mb-2">
-        <label for="filterNomor" class="form-label">No</label>
-        <input type="text" class="form-control" id="filterNomor">
-      </div>
-    </div>
-
-    <div class="col-lg-3">
-      <div class="mb-2">
-        <label for="filterName" class="form-label">Nama</label>
-        <input type="text" class="form-control" id="filterName">
-      </div>
-    </div>
-
-    <div class="col-lg-6">
-      <div class="mb-2">
-        <label for="filterDateFrom" class="form-label">Tanggal Dinas</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="filterDateFrom" placeholder="Dari">
-          <div class="input-group-text">sampai</div>
-          <input type="text" class="form-control" id="filterDateTo" placeholder="Sampai">
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-3">
-      <div class="mb-2">
-        <button id="btnFilterClear" type="button" class="btn btn-warning" type="button"
-          onclick="ClearFilterFields();">Clear</button>
-        <button id="btnEditSave" type="button" class="btn btn-primary" type="button"
-          onclick="SearchEntry();">Search</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="row mt-5">
+  <div class="row mt-2">
     <div class="col">
       <h2>Master Data</h2>
     </div>
   </div>
 
-  <div class="row table-responsive">
 
-    <table id="tableEntry" class="col table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Sel</th>
-          <th scope="col">Nomor Dok</th>
-          <th scope="col">Nama</th>
-          <th scope="col">Tanggal Dinas</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-    </table>
-
-  </div>
-  <div class="row">
-    <div class="col-lg-3">
-      <div class="mb-2">
-        <button id="btnSaveToPDF" type="button" class="btn btn-primary" type="button"
-          onclick="SaveToPDF();">Save To PDF</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="row" hidden>
-    <div class="col-lg-6 offset-lg-3">
-      <div class="mb-2">
-        <label for="granteeName" class="form-label">Nomor</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="numPrefix" placeholder="000">
-          <input type="text" class="form-control" id="numMiddle" placeholder="XX" value="/ST-DIR/" disabled readonly>
-          <input type="text" class="form-control" id="numPostfix" placeholder="XX" disabled readonly>
-          <input type="text" class="form-control" id="numYear" placeholder="YYYY" disabled readonly>
+  <div class="row border mb-2">
+    <div class="col">
+      <div class="row">
+        <div class="col">
+          <h3>Filter</h3>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="mb-2">
+            <label for="filterNomor" class="form-label">No</label>
+            <input type="text" class="form-control" id="filterNomor">
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="mb-2">
+            <label for="filterName" class="form-label">Nama</label>
+            <input type="text" class="form-control" id="filterName">
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="mb-2">
+            <label for="filterDateFrom" class="form-label">Tanggal Dinas</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="filterDateFrom" placeholder="Dari">
+              <div class="input-group-text">sampai</div>
+              <input type="text" class="form-control" id="filterDateTo" placeholder="Sampai">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-3">
+          <div class="mb-2">
+            <button id="btnFilterClear" type="button" class="btn btn-warning" type="button"
+              onclick="ClearFilterFields();">Clear</button>
+            <button id="btnEditSave" type="button" class="btn btn-primary" type="button"
+              onclick="SearchEntry();">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row border mb-2">
+    <div class="col">
+      <div class="row table-responsive pt-2">
+        <table id="tableEntry" class="col table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nomor Dok</th>
+              <th scope="col">Nama</th>
+              <th scope="col">Tanggal Dinas</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="mb-2">
+            <button id="btnSaveToPDF" type="button" class="btn btn-primary" type="button" onclick="SaveToPDF();">Save To
+              PDF</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -104,8 +100,26 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <div class="mb-2">
+        <label for="granteeName" class="form-label">Nomor</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="numPrefix" placeholder="000" disabled readonly>
+          <input type="text" class="form-control" id="numMiddle" placeholder="XX" value="/ST-DIR/" disabled readonly>
+          <input type="text" class="form-control" id="numPostfix" placeholder="XX" disabled readonly>
+          <input type="text" class="form-control" id="numYear" placeholder="YYYY" disabled readonly>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="row mt-3">
     <div class="col-lg-6">
+      <div class="mb-2" hidden>
+        <label for="entryId" class="form-label">Id</label>
+        <input type="text" class="form-control" id="entryId">
+      </div>
       <div class="mb-2">
         <label for="grantorName" class="form-label">Pejabat yang Berwenang Memberikan Izin</label>
         <input type="text" class="form-control" id="grantorName">
@@ -177,4 +191,24 @@
   </div>
 
 </div>
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+      </div>
+      <div class="modal-body">
+        <p>You are about to delete <b><i class="title"></i></b> record, this procedure is irreversible.</p>
+        <p>Do you want to proceed?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary btn-ok">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="/scripts/staff/staff.bundle.js"></script>

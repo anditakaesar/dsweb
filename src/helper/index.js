@@ -10,13 +10,17 @@ import db, { sessionStorage } from './db'
 import { ALERT } from './css/alert'
 import migrationRouter from '../routers/migration'
 
+const validValue = (val) => {
+  return (val != '' && val != undefined)
+}
+
 const routers = {
   api, routerAdmin, routerAuth,
   editRouter, migrationRouter,
 }
 
 const funct = {
-  checkSession, checkSessionApi,
+  checkSession, checkSessionApi, validValue
 }
 
 const css = {
