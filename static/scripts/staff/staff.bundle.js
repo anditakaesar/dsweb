@@ -131,7 +131,7 @@ function FillEditEntry(data) {
     if (key == 'entryId') {
       $('#' + key).val(data['id']);
     } else if (key == 'travelDate' || key == 'travelArrivalDate') {
-      $('#' + key).datepicker('setDate', data[key]);
+      $('#' + key).datepicker('setDate', new Date(data[key]));
     } else {
       $('#' + key).val(data[key]);
     }
