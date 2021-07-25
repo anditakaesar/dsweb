@@ -79,7 +79,6 @@ function _createPDF() {
             html = template((0, _entry["default"])(entry));
             _context.next = 5;
             return puppeteer.launch({
-              args: ['--no-sandbox'],
               headless: true
             });
 
@@ -126,6 +125,8 @@ editRouter.get('/pdf/:id', function (req, res) {
           'Content-Length': pdf.length
         });
         res.send(pdf);
+      })["catch"](function (err) {
+        throw err;
       });
     })["catch"](function (err) {
       res.json({
