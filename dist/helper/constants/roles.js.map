@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/helper/constants/roles.js"],"names":["ROLES","ADMIN","STAFF"],"mappings":";;;;;;AAAO,IAAMA,KAAK,GAAG;AACnBC,EAAAA,KAAK,EAAE,OADY;AAEnBC,EAAAA,KAAK,EAAE;AAFY,CAAd","sourcesContent":["export const ROLES = {\r\n  ADMIN: 'admin',\r\n  STAFF: 'staff',\r\n}"],"file":"roles.js"}
