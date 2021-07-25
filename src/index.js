@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import app from './app'
 import helper from './helper'
 import path from 'path'
