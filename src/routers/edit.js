@@ -47,7 +47,7 @@ async function createPDF(entry) {
   let template = handlebars.compile(templateHtml)
   let html = template(FormatEntry(entry))
 
-  const browser = await puppeteer.launch({ args: ['--no-sandbox'], headless: true })
+  const browser = await puppeteer.launch({ headless: true })
   let page = await browser.newPage();
   await page.goto(`data:text/html;charset=UTF-8,${html}`, {
     waitUntil: 'networkidle0'
@@ -68,6 +68,9 @@ editRouter.get('/pdf/:id', (req, res) => {
             res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length })
             res.send(pdf)
           })
+          .catch((err) => {
+            throw err
+          }) 
       })
       .catch((err) => {
         res.json({
