@@ -24,3 +24,7 @@ export default function FormatEntry(ent) {
 
   return newEntry
 }
+
+export function FormatPDFName(ent) {
+  return `${ent.numPrefix}${ent.numPostfix}${ent.numYear}.pdf`
+}

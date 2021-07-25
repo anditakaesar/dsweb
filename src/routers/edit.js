@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { ROLES } from '../helper/constants/roles'
 import db from '../helper/db'
-import FormatEntry from '../helper/entry'
+import FormatEntry, { FormatPDFName } from '../helper/entry'
 import handlebars from 'handlebars'
 import fs from 'fs'
 import path from 'path'
@@ -65,9 +65,14 @@ editRouter.get('/pdf/:id', (req, res) => {
       .then((entry) => {
         createPDF(entry)
           .then((pdf) => {
-            res.set({ 'Content-Type': 'application/pdf', 'Content-Length': pdf.length })
+            res.set({
+              'Content-Type': 'application/pdf',
+              'Content-Length': pdf.length, 
+              'Content-disposition': `inline; filename=${FormatPDFName(entry)}`
+            })
             res.send(pdf)
           })
+
       })
       .catch((err) => {
         res.json({
