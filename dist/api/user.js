@@ -1,5 +1,7 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -14,8 +16,6 @@ var _helper = _interopRequireDefault(require("../helper"));
 var _roles = require("../helper/constants/roles");
 
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var userRouter = (0, _express.Router)();
 var User = _db["default"].User;

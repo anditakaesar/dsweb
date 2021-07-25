@@ -1,13 +1,13 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.validatePassword = exports.checkSessionApi = exports.checkSession = void 0;
 
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var checkSession = function checkSession(req, res, next) {
   if (req.session.user === undefined) {

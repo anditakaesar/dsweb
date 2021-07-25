@@ -1,9 +1,13 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
+var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _express = require("express");
 
@@ -14,10 +18,6 @@ var _helper = _interopRequireDefault(require("../helper"));
 var _sequelize = require("sequelize");
 
 var _entry = _interopRequireDefault(require("../helper/entry"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var entryRouter = (0, _express.Router)();
 var Entry = _db["default"].Entry;
@@ -79,31 +79,31 @@ entryRouter.post('/dt', function (req, res) {
 
       if (_helper["default"].funct.validValue(req.query.no)) {
         where[_sequelize.Op.or].push({
-          numPrefix: _defineProperty({}, _sequelize.Op.like, "%".concat(req.query.no, "%"))
+          numPrefix: (0, _defineProperty2["default"])({}, _sequelize.Op.like, "%".concat(req.query.no, "%"))
         });
       }
 
       if (_helper["default"].funct.validValue(req.query.name)) {
         var qName = req.query.name.toLowerCase();
 
-        where[_sequelize.Op.or].push(_sequelize.Sequelize.where(_sequelize.Sequelize.fn('lower', _sequelize.Sequelize.col('granteeName')), _defineProperty({}, _sequelize.Op.like, "%".concat(qName, "%"))));
+        where[_sequelize.Op.or].push(_sequelize.Sequelize.where(_sequelize.Sequelize.fn('lower', _sequelize.Sequelize.col('granteeName')), (0, _defineProperty2["default"])({}, _sequelize.Op.like, "%".concat(qName, "%"))));
       }
 
       if (_helper["default"].funct.validValue(req.query.from)) {
         where[_sequelize.Op.or].push({
-          travelDate: _defineProperty({}, _sequelize.Op.gte, req.query.from)
+          travelDate: (0, _defineProperty2["default"])({}, _sequelize.Op.gte, req.query.from)
         });
 
         if (_helper["default"].funct.validValue(req.query.to)) {
           where[_sequelize.Op.or].pop();
 
           where[_sequelize.Op.or].push({
-            travelDate: _defineProperty({}, _sequelize.Op.and, [_defineProperty({}, _sequelize.Op.gte, req.query.from), _defineProperty({}, _sequelize.Op.lte, req.query.to)])
+            travelDate: (0, _defineProperty2["default"])({}, _sequelize.Op.and, [(0, _defineProperty2["default"])({}, _sequelize.Op.gte, req.query.from), (0, _defineProperty2["default"])({}, _sequelize.Op.lte, req.query.to)])
           });
         }
       } else if (_helper["default"].funct.validValue(req.query.to)) {
         where[_sequelize.Op.or].push({
-          travelDate: _defineProperty({}, _sequelize.Op.lte, req.query.to)
+          travelDate: (0, _defineProperty2["default"])({}, _sequelize.Op.lte, req.query.to)
         });
       }
     }

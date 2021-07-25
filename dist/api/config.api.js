@@ -1,5 +1,7 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -10,8 +12,6 @@ var _express = require("express");
 var _db = _interopRequireDefault(require("../helper/db"));
 
 var _helper = _interopRequireDefault(require("../helper"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var configRouter = (0, _express.Router)();
 var Config = _db["default"].Config;

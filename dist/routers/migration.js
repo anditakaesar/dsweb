@@ -1,5 +1,7 @@
 "use strict";
 
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -16,8 +18,6 @@ var _db = _interopRequireDefault(require("../helper/db"));
 var _logger = _interopRequireDefault(require("../logger"));
 
 var _env = _interopRequireDefault(require("../env"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var router = (0, _express.Router)();
 var sequelize = _db["default"].sequelize;
