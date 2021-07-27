@@ -32,7 +32,12 @@
         <label for="granteeName" class="form-label">Nama dan Jabatan Diperintah</label>
         <div class="input-group">
           <input type="text" class="form-control" id="granteeName" placeholder="Nama">
-          <input type="text" class="form-control" id="granteePosition" placeholder="Jabatan">
+          <select class="form-select" id="granteePosition" placeholder="Jabatan">
+            <option disabled selected value>---Jabatan---</option>
+            {{#each data.position}}
+            <option value="{{{positionCode}}}">{{{positionName}}}</option>
+            {{/each}}
+          </select>
         </div>
       </div>
       <div class="mb-2">
@@ -60,6 +65,15 @@
       <div class="mb-2">
         <label for="travelReason" class="form-label">Maksud Perjalanan</label>
         <textarea type="text" class="form-control" id="travelReason" rows="3"></textarea>
+      </div>
+      <div class="mb-2">
+        <label for="travelLengthType" class="form-label">Jarak</label>
+        <select class="form-select" id="travelLengthType" placeholder="Jarak">
+          <option disabled selected value>---Jarak---</option>
+          {{#each data.travelType}}
+          <option value="{{{id}}}">{{{travelName}}}</option>
+          {{/each}}
+        </select>
       </div>
       <div class="mb-2">
         <label for="travelDate" class="form-label">Tanggal Perjalanan Dinas</label>

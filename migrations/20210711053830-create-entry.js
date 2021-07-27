@@ -41,6 +41,9 @@ module.exports = {
       travelLength: {
         type: Sequelize.INTEGER
       },
+      travelLengthType: {
+        type: Sequelize.INTEGER
+      },
       guarantorName: {
         type: Sequelize.STRING
       },

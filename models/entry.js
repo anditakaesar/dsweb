@@ -25,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     travelArrivalDate: DataTypes.DATEONLY,
     travelDate: DataTypes.DATEONLY,
     travelLength: DataTypes.INTEGER,
+    travelLengthType: DataTypes.INTEGER,
     guarantorName: DataTypes.STRING,
     otherInfo: DataTypes.TEXT,
     numPrefix: DataTypes.STRING,

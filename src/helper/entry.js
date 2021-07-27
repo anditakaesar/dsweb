@@ -12,6 +12,7 @@ export default function FormatEntry(ent) {
   newEntry.travelArrivalDate = ent.travelArrivalDate
   newEntry.travelDate = ent.travelDate
   newEntry.travelLength = ent.travelLength
+  newEntry.travelLengthType = ent.travelLengthType
   newEntry.guarantorName = ent.guarantorName
   newEntry.otherInfo = ent.otherInfo
   newEntry.numPrefix = ent.numPrefix
@@ -27,4 +28,21 @@ export default function FormatEntry(ent) {
 
 export function FormatPDFName(ent) {
   return `${ent.numPrefix}${ent.numPostfix}${ent.numYear}.pdf`
+}
+
+export function FormatPosition(pos) {
+  let newPos = {}
+  newPos.id = pos.id
+  newPos.positionCode = pos.positionCode
+  newPos.positionName = pos.positionName
+
+  return newPos
+}
+
+export function FormatTravelType(trav) {
+  let newType = {}
+  newType.id = trav.id
+  newType.travelName = trav.travelName
+
+  return newType
 }
