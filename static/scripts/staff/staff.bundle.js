@@ -17,6 +17,7 @@ var fieldNames = [
   'travelReason',
   'travelDate',
   'travelLength',
+  'travelLengthType',
   'guarantorName',
   'otherInfo'
 ]
@@ -41,7 +42,7 @@ var cleanUrl = window.location.origin + window.location.pathname;
 /* end VARS */
 
 function SetNomorPostfix(input) {
-  $('#numPostfix').val(input.substring(0, 2).toUpperCase());
+  $('#numPostfix').val(input.toUpperCase());
 }
 
 function SetNomorYear() {
@@ -65,6 +66,7 @@ function ClearFields() {
     elem.val(null);
   });
 
+  $('#numPostfix').val('XX')
 }
 
 function SaveEntry() {
@@ -195,7 +197,7 @@ function LoadTable() {
     searching: false,
     ajax: {
       url: apiUrl,
-      type: 'POST'
+      type: 'POST',
     },
     columnDefs: [
       {
@@ -323,8 +325,8 @@ $(document).ready(function () {
     regional: 'id'
   });
 
-  $('#grantorName').on('change', function () {
-    let input = $('#grantorName').val();
+  $('#granteePosition').on('change', function () {
+    let input = $('#granteePosition').val();
     if (input.length > 2) {
       SetNomorPostfix(input);
     }
