@@ -66,6 +66,7 @@ function ClearFields() {
     elem.val(null);
   });
 
+  $('#numPostfix').val('XX')
 }
 
 function SaveEntry() {
