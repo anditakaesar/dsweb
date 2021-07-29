@@ -5,6 +5,7 @@ import FormatEntry, { FormatPDFName, FormatPosition, FormatTravelType } from '..
 import handlebars from 'handlebars'
 import fs from 'fs'
 import path from 'path'
+import moment from 'moment'
 
 const editRouter = Router()
 const { Entry, Position, TravelType } = db
@@ -52,7 +53,12 @@ const getPositionName = (entry, position = []) => {
 const getTravelTypeName = (entry, travelType = []) => {
   let trv = travelType.find(t => t.id == entry.travelLengthType)
   return trv.travelName
-} 
+}
+
+const formatDate = (rawStrDate, formatStr = 'DD-MM-YYYY') => {
+  let rawDate = moment(rawStrDate)
+  return rawDate.format(formatStr)
+}
 
 editRouter.use((req, res, next) => {
   if (req.session.user.role === ROLES.STAFF) {
@@ -92,6 +98,9 @@ async function createPDF(entry, res) {
   let loadedEntry = FormatEntry(entry)
   loadedEntry.granteePosition = getPositionName(entry, res.data.position)
   loadedEntry.travelLengthType = getTravelTypeName(entry, res.data.travelType)
+  loadedEntry.travelDate = formatDate(loadedEntry.travelDate)
+  loadedEntry.travelArrivalDate = formatDate(loadedEntry.travelArrivalDate)
+  console.log('ENTRY', loadedEntry)
   let html = template(loadedEntry)
 
   const browser = await puppeteer.launch({ args: ['--no-sandbox'], headless: true })
