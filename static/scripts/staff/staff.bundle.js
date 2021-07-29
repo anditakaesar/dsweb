@@ -180,7 +180,15 @@ function ChangeUrl(newUrl) {
 }
 
 function SaveToPDF() {
-  console.log('Todo SaveToPDF');
+  if (isTableExist) {
+    let arrIds = []
+    let dataRows = tableEntry.rows('.selected').data().toArray();
+    dataRows.forEach(function(row, i) {
+      arrIds.push(row.id);
+    });
+    let combinedUrl = '/edit/pdf/combined'
+    window.open(window.location.origin + combinedUrl + '?ids=' + arrIds)
+  }
 }
 
 function LoadTable() {

@@ -29,6 +29,7 @@
     "express-session": "^1.17.2",
     "helmet": "^4.6.0",
     "moment": "^2.29.1",
+    "pdf-lib": "^1.16.0",
     "puppeteer": "^10.1.0",
     "sequelize": "^6.6.2",
     "sqlite3": "^5.0.2",
