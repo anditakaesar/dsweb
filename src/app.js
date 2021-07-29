@@ -75,6 +75,7 @@ app.use((err, req, res, next) => {
     ...error.meta,
     method: req.method,
     originalUrl: req.originalUrl,
+    internalError: err
   }
 
   helper.logger.error(error.message, error.meta)
