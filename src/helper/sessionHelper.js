@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt'
+import genError from './errorHelper'
 
 export const checkSession = (req, res, next) => {
   if (req.session.user === undefined) {
@@ -11,13 +12,9 @@ export const checkSession = (req, res, next) => {
 
 export const checkSessionApi = (req, res, next) => {
   if (req.session.user === undefined) {
-    res.data.error = {
-      message: 'You must login',
-      meta: {
-        intmsg: 'accessing checkSessionApi',
-      },
-    }
-    next(res.data.error)
+    let error = genError(null, req)
+    error.message = 'You Must Login'
+    next(error)
   } else {
     next()
   }

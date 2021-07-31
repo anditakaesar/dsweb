@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import db from '../helper/db'
 import helper from '../helper'
+import genError from '../helper/errorHelper'
 
 const configRouter = Router()
 const { Config } = db
@@ -19,109 +20,152 @@ configRouter.post('/', (req, res) => {
       configkey: req.body.configkey,
       configvalue: req.body.configvalue,
     })
-    .then((cfg) => {
-      res.json({
-        message: 'save success',
-        messageType: 'primary',
-        data: cfg,
+      .then((cfg) => {
+        res.json({
+          message: 'save success',
+          messageType: 'primary',
+          data: cfg,
+        })
       })
-    })
-    .catch((err) => {
-      res.json({
-        message: `error: ${err.message}`,
-        messageType: 'danger'
+      .catch((err) => {
+        err = genError(err, req)
+        helper.logger.error(err.message, err)
+        res.json({
+          message: `error: ${err.message}`,
+          messageType: 'danger'
+        })
       })
-    })
   })
 })
 
-configRouter.post('/:id', (req, res) => {
+configRouter.post('/:id', (req, res, next) => {
+  if (req.params.id == undefined) {
+    let error = genError(null, req)
+    error.message('params.id required')
+    next(error)
+  } else {
+    next()
+  }
+}, (req, res) => {
   process.nextTick(() => {
     Config.findOne({
       where: { id: req.params.id },
     })
-    .then((cfg) => {
-      cfg.update({
-        configkey: req.body.configkey,
-        configvalue: req.body.configvalue,
+      .then((cfg) => {
+        if (!cfg) {
+          throw new Error(`no result for id ${req.params.id}`)
+        }
+        cfg.update({
+          configkey: req.body.configkey,
+          configvalue: req.body.configvalue,
+        })
+        res.json({
+          message: 'update success',
+          messageType: 'success',
+          data: cfg,
+        })
       })
-      res.json({
-        message: 'update success',
-        messageType: 'success',
-        data: cfg,
+      .catch((err) => {
+        err = genError(err, req)
+        helper.logger.error(err.message, err)
+        res.json({
+          message: `error: ${err.message}`,
+          messageType: 'danger'
+        })
       })
-    })
-    .catch((err) => {
-      res.json({
-        message: `error: ${err.message}`,
-        messageType: 'danger'
-      })
-    })
   })
 })
 
 configRouter.get('/all', (req, res) => {
   process.nextTick(() => {
     Config.findAndCountAll()
-    .then((results) => {
-      let data = []
-      results.rows.forEach((cfg, i) => {
-        data.push(FormatConfig(cfg))
+      .then((results) => {
+        let data = []
+        results.rows.forEach((cfg, i) => {
+          data.push(FormatConfig(cfg))
+        })
+        res.json({
+          message: 'all config loaded',
+          messageType: 'primary',
+          data,
+          count: results.count,
+        })
       })
-      res.json({
-        message: 'all config loaded',
-        messageType: 'primary',
-        data,
-        count: results.count,
+      .catch((err) => {
+        err = genError(err, req)
+        helper.logger.error(err.message, err)
+        res.json({
+          message: `error: ${err.message}`,
+          messageType: 'danger'
+        })
       })
-    })
-    .catch((err) => {
-      res.json({
-        message: `error: ${err.message}`,
-        messageType: 'danger'
-      })
-    })
   })
 })
 
-configRouter.get('/:id', (req, res) => {
+configRouter.get('/:id', (req, res, next) => {
+  if (req.params.id == undefined) {
+    let error = genError(null, req)
+    error.message('params.id required')
+    next(error)
+  } else {
+    next()
+  }
+}, (req, res) => {
   process.nextTick(() => {
     Config.findOne({
       where: { id: req.params.id },
     })
-    .then((result) => {
-      res.json({
-        message: 'config loaded',
-        config: FormatConfig(result),
+      .then((result) => {
+        if (!result) {
+          throw new Error(`no result for id ${req.params.id}`)
+        }
+        res.json({
+          message: 'config loaded',
+          config: FormatConfig(result),
+        })
       })
-    })
-    .catch((err) => {
-      res.json({
-        message: 'error',
-        errmsg: err.message,
+      .catch((err) => {
+        err = genError(err, req)
+        helper.logger.error(err.message, err)
+        res.json({
+          message: 'error',
+          errmsg: err.message,
+        })
       })
-    })
   })
 })
 
-configRouter.delete('/:id', (req, res) => {
+configRouter.delete('/:id', (req, res, next) => {
+  if (req.params.id == undefined) {
+    let error = genError(null, req)
+    error.message('params.id required')
+    next(error)
+  } else {
+    next()
+  }
+}, (req, res) => {
   process.nextTick(() => {
     Config.destroy({
       where: { id: req.params.id },
     })
-    .then((result) => {
-      res.json({
-        message: 'config deleted',
-        messageType: 'danger',
-        config: FormatConfig(result),
+      .then((result) => {
+        if (!result) {
+          throw new Error(`no result for id ${req.params.id}`)
+        }
+        res.json({
+          message: 'config deleted',
+          messageType: 'danger',
+          config: FormatConfig(result),
+        })
       })
-    })
-    .catch((err) => {
-      res.json({
-        message: 'error',
-        errmsg: err.message,
+      .catch((err) => {
+        err = genError(err, req)
+        helper.logger.error(err.message, err)
+        res.json({
+          message: 'error',
+          errmsg: err.message,
+        })
       })
-    })
   })
 })
 
