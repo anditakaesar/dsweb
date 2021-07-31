@@ -3,6 +3,7 @@ import db from '../helper/db'
 import helper from '../helper'
 import { Op, Sequelize } from 'sequelize'
 import FormatEntry from '../helper/entry'
+import genError from '../helper/errorHelper'
 
 const entryRouter = Router()
 const { Entry } = db
@@ -23,6 +24,7 @@ entryRouter.post('/', (req, res) => {
         })
       })
       .catch((err) => {
+        helper.logger.error(err.message, genError(err, req))
         res.json({
           message: `error: ${err.message}`,
           messageType: 'danger'
@@ -47,6 +49,7 @@ entryRouter.get('/all', (req, res) => {
         })
       })
       .catch((err) => {
+        helper.logger.error(err.message, genError(err, req))
         res.json({
           message: 'error',
           errmsg: err.message,
@@ -142,6 +145,7 @@ entryRouter.post('/dt', (req, res) => {
         })
       })
       .catch((err) => {
+        helper.logger.error(err.message, genError(err, req))
         res.json({
           message: 'error',
           errmsg: err.message,
@@ -167,6 +171,7 @@ entryRouter.post('/:id', (req, res) => {
         })
       })
       .catch((err) => {
+        helper.logger.error(err.message, genError(err, req))
         res.json({
           message: 'error',
           errmsg: err.message,
@@ -187,6 +192,7 @@ entryRouter.get('/:id', (req, res) => {
         })
       })
       .catch((err) => {
+        helper.logger.error(err.message, genError(err, req))
         res.json({
           message: 'error',
           errmsg: err.message,
@@ -209,6 +215,7 @@ entryRouter.delete('/:id', (req, res) => {
         })
       })
       .catch((err) => {
+        helper.logger.error(err.message, genError(err, req))
         res.json({
           message: 'error',
           errmsg: err.message,
