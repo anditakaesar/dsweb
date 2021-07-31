@@ -9,6 +9,7 @@ import helper from './helper'
 import { checkSession, checkSessionApi } from './helper/sessionHelper'
 import { ALERT } from './helper/css/alert'
 import { loginRoute } from './routers/auth'
+import genError from './helper/errorHelper'
 
 const { routers, env, sessionStorage } = helper
 const { hbs, sessionCookieConfig } = helper.configs
@@ -49,13 +50,6 @@ app.engine('hbs', hbs.engine)
 app.use((req, res, next) => {
   res.data = {}
   res.data.title = 'DS Web'
-  res.data.error = new Error()
-  // res.data.error = {
-  //   message: 'error test',
-  //   meta: {
-  //     field1: 'some meta here',
-  //   },
-  // }
   res.data.message_type = ALERT.PRIMARY
   next()
 })
@@ -70,15 +64,8 @@ app.get('/', loginRoute)
 
 // error handling
 app.use((err, req, res, next) => {
-  let { error } = res.data
-  error.meta = {
-    ...error.meta,
-    method: req.method,
-    originalUrl: req.originalUrl,
-    internalError: err.message
-  }
-
-  helper.logger.error(error.message, error.meta)
+  err = genError(err, req)
+  helper.logger.error(err.message, err)
   
   res.status(500).json({
     message: 'Some error, please contact your developer',

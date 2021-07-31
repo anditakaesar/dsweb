@@ -8,6 +8,8 @@ import path from 'path'
 import moment from 'moment'
 import { Op } from 'sequelize'
 import { PDFDocument } from 'pdf-lib'
+import helper from '../helper'
+import genError from '../helper/errorHelper'
 
 const editRouter = Router()
 const { Entry, Position, TravelType } = db
@@ -23,6 +25,7 @@ const getPosition = (req, res, next) => {
       next()
     })
     .catch((err) => {
+      helper.logger.error(err.message, genError(err, req))
       res.json({
         message: 'Error edit/getPosition',
         error: err
@@ -40,6 +43,7 @@ const getTravelType = (req, res, next) => {
       next()
     })
     .catch((err) => {
+      helper.logger.error(err.message, genError(err, req))
       res.json({
         message: 'Error edit/getPosition',
         error: err
@@ -49,12 +53,12 @@ const getTravelType = (req, res, next) => {
 
 const getPositionName = (entry, position = []) => {
   let pos = position.find(p => p.positionCode == entry.granteePosition)
-  return pos.positionName
+  return pos ? pos.positionName : ""
 }
 
 const getTravelTypeName = (entry, travelType = []) => {
   let trv = travelType.find(t => t.id == entry.travelLengthType)
-  return trv.travelName
+  return trv ? trv.travelName : ""
 }
 
 const formatDate = (rawStrDate, formatStr = 'DD-MM-YYYY') => {
@@ -79,6 +83,7 @@ const getEntries = (req, res, next) => {
           next()
         })
         .catch((err) => {
+          helper.logger.error(err.message, genError(err, req))
           res.json({
             message: 'error on edit/getEntries',
             error: err
@@ -206,6 +211,7 @@ editRouter.get('/pdf/:id', (req, res) => {
 
       })
       .catch((err) => {
+        helper.logger.error(err.message, genError(err, req))
         res.json({
           message: 'error',
           errmsg: err.message,

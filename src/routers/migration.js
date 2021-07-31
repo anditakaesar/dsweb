@@ -4,6 +4,7 @@ import Sequelize from 'sequelize'
 import db from '../helper/db'
 import logger from '../logger'
 import env from '../env'
+import genError from '../helper/errorHelper'
 
 const router = Router()
 const { sequelize } = db
@@ -46,8 +47,8 @@ router.get('/', (req, res, next) => {
         })
       })
       .catch((err) => {
-        res.data.error.message = err.message + ' error on migration'
-        next(res.data.error.message)
+        logger.error(err.message, genError(err, req))
+        next(err)
       })
   })
 })

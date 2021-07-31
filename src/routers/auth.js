@@ -3,6 +3,7 @@ import logger from '../logger'
 import db from '../helper/db'
 import { ALERT } from '../helper/css/alert'
 import { validatePassword } from '../helper/sessionHelper'
+import genError from '../helper/errorHelper'
 
 const { User } = db
 
@@ -81,8 +82,7 @@ routerAuth.post('/login', fieldCheck, (req, res, next) => {
         }
       })
       .catch((err) => {
-        res.data.error.message = err.message
-        next(res.data.error)
+        next(genError(err, req))
       })
   })
 })
