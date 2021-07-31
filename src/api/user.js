@@ -3,15 +3,18 @@ import db from '../helper/db'
 import helper from '../helper'
 import { ROLES } from '../helper/constants/roles'
 import bcrypt from 'bcrypt'
+import genError from '../helper/errorHelper'
 
 const userRouter = Router()
 const { User } = db
 
 function FormatUser(user) {
   let newUser = {}
-  newUser.id = user.id
-  newUser.role = user.role
-  newUser.username = user.username
+  if (user != null && user != undefined) {
+    newUser.id = user.id
+    newUser.role = user.role
+    newUser.username = user.username
+  }
   return newUser
 }
 
@@ -32,6 +35,7 @@ userRouter.get('/all', (req, res) => {
       })
     })
     .catch((err) => {
+      helper.logger.error(err.message, genError(err, req))
       res.json({
         message: 'error',
         errmsg: err.message,
@@ -52,6 +56,7 @@ userRouter.get('/:id', (req, res) => {
       })
     })
     .catch((err) => {
+      helper.logger.error(err.message, genError(err, req))
       res.json({
         message: 'error',
         errmsg: err.message,
@@ -84,6 +89,7 @@ userRouter.post('/:id', (req, res) => {
       })
     })
     .catch((err) => {
+      helper.logger.error(err.message, genError(err, req))
       res.json({
         message: 'error',
         errmsg: err.message,
