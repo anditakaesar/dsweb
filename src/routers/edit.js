@@ -49,12 +49,12 @@ const getTravelType = (req, res, next) => {
 
 const getPositionName = (entry, position = []) => {
   let pos = position.find(p => p.positionCode == entry.granteePosition)
-  return pos.positionName
+  return pos ? pos.positionName : ""
 }
 
 const getTravelTypeName = (entry, travelType = []) => {
   let trv = travelType.find(t => t.id == entry.travelLengthType)
-  return trv.travelName
+  return trv ? trv.travelName : ""
 }
 
 const formatDate = (rawStrDate, formatStr = 'DD-MM-YYYY') => {
