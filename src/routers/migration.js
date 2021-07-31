@@ -47,8 +47,7 @@ router.get('/', (req, res, next) => {
         })
       })
       .catch((err) => {
-        err = genError(err, req)
-        err.intmessage = 'error on migration'
+        logger.error(err.message, genError(err, req))
         next(err)
       })
   })
