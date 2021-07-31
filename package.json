@@ -1,11 +1,11 @@
 {
   "name": "dswebback",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "description": "web app",
   "main": "index.js",
   "scripts": {
     "build": "npx babel -d ./dist ./src -s",
-    "start:dev": "nodemon -r dotenv/config --exec babel-node ./index.js --ignore ./static/",
+    "start:dev": "nodemon --exec babel-node ./index.js --ignore ./static/",
     "start": "npm run build && node dist/index.js",
     "start:nobuild": "node -r dotenv/config index.js"
   },
