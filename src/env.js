@@ -1,4 +1,4 @@
-export const NODE_ENV = process.env.NODE_ENV || 'development'
+export const NODE_ENV = process.env.NODE_ENV || 'production'
 export const PORT = parseInt(process.env.PORT, 10) || 3000
 export const SESSION_NAME = process.env.SESSION_NAME || '_ab61dcpz8e7'
 export const SESSION_AGESEC = parseInt(process.env.SESSION_AGESEC, 10) || 86400
