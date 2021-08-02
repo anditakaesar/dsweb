@@ -222,6 +222,7 @@ function LoadTable() {
       { data: "empty" },
       { data: "numPrefix" },
       { data: "granteeName" },
+      { data: "granteePositionName" },
       { data: "travelDate" },
       {
         data: "id",
@@ -254,6 +255,7 @@ function LoadFilterValue() {
   $('#filterName').val(urlParams.get('name'));
   $('#filterDateFrom').val(urlParams.get('from'));
   $('#filterDateTo').val(urlParams.get('to'));
+  $('#filterPosition').val(urlParams.get('pos'));
 }
 
 function SearchEntry() {
@@ -261,7 +263,8 @@ function SearchEntry() {
     no: $('#filterNomor').val(),
     name: $('#filterName').val(),
     from: $('#filterDateFrom').val(),
-    to: $('#filterDateTo').val()
+    to: $('#filterDateTo').val(),
+    pos:  $('#filterPosition').val()
   }
 
   let newUrl = cleanUrl + '?';

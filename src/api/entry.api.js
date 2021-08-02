@@ -4,9 +4,27 @@ import helper from '../helper'
 import { Op, Sequelize } from 'sequelize'
 import FormatEntry from '../helper/entry'
 import genError from '../helper/errorHelper'
+import { getPosition, getPositionName } from '../routers/edit'
 
 const entryRouter = Router()
 const { Entry } = db
+
+function AddPositionName(entry, position = []) {
+  let granteePositionName = getPositionName(entry, position)
+  let newEntry = {
+    ...entry,
+    granteePositionName
+  }
+
+  return newEntry
+}
+
+function FormatEntryTable(entry, position = []) {
+  let newEntry = FormatEntry(entry)
+  newEntry = AddPositionName(newEntry, position)
+
+  return newEntry
+}
 
 entryRouter.post('/', (req, res) => {
   process.nextTick(() => {
@@ -58,7 +76,7 @@ entryRouter.get('/all', (req, res) => {
   })
 })
 
-entryRouter.post('/dt', (req, res) => {
+entryRouter.post('/dt', getPosition, (req, res) => {
   process.nextTick(() => {
     let draw = parseInt(req.body.draw, 10)
     let offset = parseInt(req.body.start, 10)
@@ -86,6 +104,14 @@ entryRouter.post('/dt', (req, res) => {
           Sequelize.where(
             Sequelize.fn('lower', Sequelize.col('granteeName')), { [Op.like]: `%${qName}%` }
           )
+        )
+      }
+
+      if (helper.funct.validValue(req.query.pos)) {
+        where[Op.or].push(
+          {
+            granteePosition: req.query.pos
+          }
         )
       }
 
@@ -134,7 +160,7 @@ entryRouter.post('/dt', (req, res) => {
     )
       .then((data) => {
         data.rows.forEach((v, i) => {
-          results.push(FormatEntry(v))
+          results.push(FormatEntryTable(v, res.data.position))
         })
         // console.log('ENTRY', results)
         res.json({
