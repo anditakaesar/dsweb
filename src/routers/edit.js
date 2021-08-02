@@ -15,7 +15,7 @@ const editRouter = Router()
 const { Entry, Position, TravelType } = db
 const puppeteer = require('puppeteer')
 
-const getPosition = (req, res, next) => {
+export const getPosition = (req, res, next) => {
   res.data.position = []
   Position.findAll()
     .then((posdata) => {
@@ -51,7 +51,7 @@ const getTravelType = (req, res, next) => {
     })
 }
 
-const getPositionName = (entry, position = []) => {
+export const getPositionName = (entry, position = []) => {
   let pos = position.find(p => p.positionCode == entry.granteePosition)
   return pos ? pos.positionName : ""
 }

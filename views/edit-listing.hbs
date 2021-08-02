@@ -38,6 +38,14 @@
             <label for="filterName" class="form-label">Nama</label>
             <input type="text" class="form-control" id="filterName">
           </div>
+          <div class="mb-2">
+            <select class="form-select" id="filterPosition" placeholder="Jabatan">
+              <option selected value>---Jabatan---</option>
+              {{#each data.position}}
+              <option value="{{{positionCode}}}">{{{positionName}}}</option>
+              {{/each}}
+            </select>
+          </div>
         </div>
 
         <div class="col-lg-6">
@@ -75,6 +83,7 @@
               <th scope="col">#</th>
               <th scope="col">Nomor Dok</th>
               <th scope="col">Nama</th>
+              <th scope="col">Jabatan</th>
               <th scope="col">Tanggal Dinas</th>
               <th scope="col">Action</th>
             </tr>
