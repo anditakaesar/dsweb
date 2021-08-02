@@ -395,7 +395,7 @@ editRouter.get('/pdf/combined', getEntries, function (req, res) {
       res.set({
         'Content-Type': 'application/pdf',
         'Content-Length': merged.length,
-        'Content-disposition': "inline; filename=".concat((0, _moment["default"])().format("YYYYMMDD"), "_SURAT_PERINTAH_PERJALANAN_DINAS_combined")
+        'Content-disposition': "inline; filename=".concat((0, _moment["default"])().format("YYYYMMDD"), "_SURAT_PERINTAH_PERJALANAN_DINAS_combined.pdf")
       });
       res.send(Buffer.from(merged, 'utf8'));
     });
