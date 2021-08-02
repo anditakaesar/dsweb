@@ -187,7 +187,7 @@ editRouter.get('/pdf/combined', getEntries, (req, res) => {
         res.set({
           'Content-Type': 'application/pdf',
           'Content-Length': merged.length,
-          'Content-disposition': `inline; filename=${moment().format("YYYYMMDD")}_SURAT_PERINTAH_PERJALANAN_DINAS_combined`
+          'Content-disposition': `inline; filename=${moment().format("YYYYMMDD")}_SURAT_PERINTAH_PERJALANAN_DINAS_combined.pdf`
         })
         res.send(Buffer.from(merged, 'utf8'))
       })
