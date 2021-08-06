@@ -6,7 +6,7 @@ import { checkSession, checkSessionApi } from './sessionHelper'
 import routerAdmin from '../routers/admin'
 import routerAuth from '../routers/auth'
 import editRouter from '../routers/edit'
-import db, { sessionStorage } from './db'
+import db, { sessionStorage, migrateDatabase } from './db'
 import { ALERT } from './css/alert'
 import migrationRouter from '../routers/migration'
 import FormatEntry from './entry'
@@ -21,7 +21,7 @@ const routers = {
 }
 
 const funct = {
-  checkSession, checkSessionApi, validValue, FormatEntry
+  checkSession, checkSessionApi, validValue, FormatEntry, migrateDatabase
 }
 
 const css = {

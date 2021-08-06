@@ -10,7 +10,7 @@ const entryRouter = Router()
 const { Entry } = db
 
 function AddPositionName(entry, position = []) {
-  let granteePositionName = getPositionName(entry, position)
+  let granteePositionName = getPositionName(entry, 'granteePosition', position)
   let newEntry = {
     ...entry,
     granteePositionName

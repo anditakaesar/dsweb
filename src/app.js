@@ -11,7 +11,7 @@ import { ALERT } from './helper/css/alert'
 import { loginRoute } from './routers/auth'
 import genError from './helper/errorHelper'
 
-const { routers, env, sessionStorage } = helper
+const { routers, env, sessionStorage, funct } = helper
 const { hbs, sessionCookieConfig } = helper.configs
 
 const app = express()
@@ -37,6 +37,9 @@ app.use(session({
   store: sessionStorage,
 }))
 app.use(cookieParser(env.COOKIES_SECRET))
+
+// migration
+funct.migrateDatabase()
 
 // static files
 app.use(express.static(path.join(__dirname, '../static')))
