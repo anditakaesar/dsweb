@@ -191,6 +191,13 @@ editRouter.get('/pdf/combined', getEntries, (req, res) => {
         })
         res.send(Buffer.from(merged, 'utf8'))
       })
+      .catch((err) => {
+        helper.logger.error(err.message, genError(err, req))
+        res.json({
+          message: 'error',
+          errmsg: err.message,
+        })
+      })
   })
 })
 
@@ -207,6 +214,13 @@ editRouter.get('/pdf/:id', (req, res) => {
               'Content-disposition': `inline; filename=${FormatPDFName(entry)}`
             })
             res.send(pdf)
+          })
+          .catch((err) => {
+            helper.logger.error(err.message, genError(err, req))
+            res.json({
+              message: 'error',
+              errmsg: err.message,
+            })
           })
 
       })
