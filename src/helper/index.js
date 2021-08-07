@@ -10,6 +10,13 @@ import db, { sessionStorage, migrateDatabase } from './db'
 import { ALERT } from './css/alert'
 import migrationRouter from '../routers/migration'
 import FormatEntry from './entry'
+import fs from 'fs'
+import path from 'path'
+
+const APP_OPTIONS_FILE = JSON.parse(fs.readFileSync(path.join(__dirname, '../../app_options.json'), 'utf8'))
+export const APP_OPTIONS = {
+  PREFIX_ZEROS: APP_OPTIONS_FILE['PREFIX_ZEROS']
+}
 
 const validValue = (val) => {
   return (val != '' && val != undefined)
@@ -31,7 +38,7 @@ const css = {
 export const helper = {
   env, routers, configs, logger, 
   db, sessionStorage, funct,
-  css,
+  css, APP_OPTIONS
 }
 
 export default helper
