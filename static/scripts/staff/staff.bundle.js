@@ -7,15 +7,18 @@ var fieldNames = [
   'entryId',
   'numPrefix',
   'grantorName',
+  'grantorPosition',
   'granteeName',
   'granteePosition',
   'travelDeparture',
   'travelDestination',
+  'travelVehicle',
   'travelType',
   'travelArrival',
   'travelArrivalDate',
   'travelReason',
   'travelDate',
+  'travelDateBack',
   'travelLength',
   'travelLengthType',
   'guarantorName',
@@ -85,6 +88,8 @@ function SaveEntry() {
   entry['travelArrivalDate'] = FormatISODate(xDate);
   xDate = $('#travelDate').datepicker('getDate');
   entry['travelDate'] = FormatISODate(xDate);
+  xDate = $('#travelDateBack').datepicker('getDate');
+  entry['travelDateBack'] = FormatISODate(xDate);
 
   $.post('/api/entry/', entry)
     .done(function (data) {
@@ -133,7 +138,7 @@ function FillEditEntry(data) {
   fieldNames.forEach(function (key, i) {
     if (key == 'entryId') {
       $('#' + key).val(data['id']);
-    } else if (key == 'travelDate' || key == 'travelArrivalDate') {
+    } else if (key == 'travelDate' || key == 'travelArrivalDate' || key == 'travelDateBack') {
       $('#' + key).datepicker('setDate', new Date(data[key]));
     } else {
       $('#' + key).val(data[key]);
@@ -156,6 +161,11 @@ function SaveEditEntry() {
     }
   });
 
+  // entryId 0
+  if (entryId == 0 || entryId == undefined || entryId == null) {
+    return;
+  }
+
   secondFields.forEach(function (v, i) {
     let elem = $('#' + v);
     entry[v] = elem.val();
@@ -165,6 +175,8 @@ function SaveEditEntry() {
   entry['travelArrivalDate'] = FormatISODate(xDate);
   xDate = $('#travelDate').datepicker('getDate');
   entry['travelDate'] = FormatISODate(xDate);
+  xDate = $('#travelDateBack').datepicker('getDate');
+  entry['travelDateBack'] = FormatISODate(xDate);
   delete entry.entryId
 
   $.post('/api/entry/' + entryId, entry)
@@ -319,22 +331,21 @@ function BindModalConfirm() {
   });
 }
 
-$(document).ready(function () {
-  $('#travelArrivalDate').datepicker({
-    changeMonth: true,
-    changeYear: true,
-    dateFormat: dateFormat,
-    showAnim: animValue,
-    regional: 'id'
+function InitializeDateFields() {
+  let fields = ['travelArrivalDate', 'travelDate', 'travelDateBack']
+  fields.forEach(function (v) {
+    $('#'+v).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: dateFormat,
+      showAnim: animValue,
+      regional: 'id'
+    });
   });
+}
 
-  $('#travelDate').datepicker({
-    changeMonth: true,
-    changeYear: true,
-    dateFormat: dateFormat,
-    showAnim: animValue,
-    regional: 'id'
-  });
+$(document).ready(function () {
+  InitializeDateFields();
 
   $('#granteePosition').on('change', function () {
     let input = $('#granteePosition').val();

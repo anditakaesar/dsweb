@@ -15,15 +15,18 @@ module.exports = (sequelize, DataTypes) => {
   };
   Entry.init({
     grantorName: DataTypes.STRING,
+    grantorPosition: DataTypes.STRING,
     granteeName: DataTypes.STRING,
     granteePosition: DataTypes.STRING,
     travelDeparture: DataTypes.STRING,
     travelDestination: DataTypes.STRING,
+    travelVehicle: DataTypes.STRING,
     travelType: DataTypes.STRING,
     travelReason: DataTypes.TEXT,
     travelArrival: DataTypes.STRING,
     travelArrivalDate: DataTypes.DATEONLY,
     travelDate: DataTypes.DATEONLY,
+    travelDateBack: DataTypes.DATEONLY,
     travelLength: DataTypes.INTEGER,
     travelLengthType: DataTypes.INTEGER,
     guarantorName: DataTypes.STRING,

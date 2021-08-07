@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import db from '../helper/db'
-import helper from '../helper'
+import helper, { APP_OPTIONS } from '../helper'
 import { Op, Sequelize } from 'sequelize'
 import FormatEntry from '../helper/entry'
 import genError from '../helper/errorHelper'
@@ -10,7 +10,7 @@ const entryRouter = Router()
 const { Entry } = db
 
 function AddPositionName(entry, position = []) {
-  let granteePositionName = getPositionName(entry, position)
+  let granteePositionName = getPositionName(entry, 'granteePosition', position)
   let newEntry = {
     ...entry,
     granteePositionName
@@ -26,30 +26,67 @@ function FormatEntryTable(entry, position = []) {
   return newEntry
 }
 
-entryRouter.post('/', (req, res) => {
-  process.nextTick(() => {
-    let newEntry = FormatEntry(req.body)
-    newEntry.userId = req.session.user.id
-    delete newEntry.id
-    delete newEntry.empty
+function AddZeros(prefixZeros, num) {
+  if (prefixZeros != undefined
+    && prefixZeros != null
+    && prefixZeros.length > 0
+    && num != undefined
+    && num != null
+    && num > 0) {
+    return (prefixZeros + num).slice(-prefixZeros.length)
+  } else {
+    return 'NULL'
+  }
+}
 
-    Entry.create(newEntry)
-      .then((ent) => {
-        res.json({
-          message: 'save success',
-          messageType: 'success',
-          data: FormatEntry(ent)
-        })
-      })
-      .catch((err) => {
-        helper.logger.error(err.message, genError(err, req))
-        res.json({
-          message: `error: ${err.message}`,
-          messageType: 'danger'
-        })
-      })
+const NewPrefix = (req, res, next) => {
+  res.data.prefix = 'NNN'
+  let options = {
+    where: Sequelize.where(
+    Sequelize.fn('strftime', '%Y', Sequelize.col('createdAt')),
+    Sequelize.fn('strftime', '%Y', 'now')
+  )}
 
-  })
+  Entry.max('numPrefix', options)
+    .then((numPrefix) => {
+      if (numPrefix) {
+        let lastPrefix = parseInt(numPrefix, 10)
+        lastPrefix = isNaN(lastPrefix) ? 0 : lastPrefix
+        let newPrefix = AddZeros(APP_OPTIONS.PREFIX_ZEROS, lastPrefix + 1)
+        res.data.prefix = newPrefix
+      } else {
+        res.data.prefix = AddZeros(APP_OPTIONS.PREFIX_ZEROS, 1)
+      }
+      next()
+    })
+    .catch((err) => {
+      helper.logger.error('NewPrefix ' + err.message, genError(err, req))
+      next(err)
+    })
+}
+
+entryRouter.post('/', NewPrefix, (req, res) => {
+  let newEntry = FormatEntry(req.body)
+  newEntry.userId = req.session.user.id
+  newEntry.numPrefix = res.data.prefix
+  delete newEntry.id
+  delete newEntry.empty
+
+  Entry.create(newEntry)
+    .then((ent) => {
+      res.json({
+        message: 'save success',
+        messageType: 'success',
+        data: FormatEntry(ent)
+      })
+    })
+    .catch((err) => {
+      helper.logger.error(err.message, genError(err, req))
+      res.json({
+        message: `error: ${err.message}`,
+        messageType: 'danger'
+      })
+    })
 })
 
 entryRouter.get('/all', (req, res) => {

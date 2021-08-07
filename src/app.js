@@ -11,11 +11,12 @@ import { ALERT } from './helper/css/alert'
 import { loginRoute } from './routers/auth'
 import genError from './helper/errorHelper'
 
-const { routers, env, sessionStorage } = helper
+const { routers, env, sessionStorage, funct, logger } = helper
 const { hbs, sessionCookieConfig } = helper.configs
 
 const app = express()
 
+logger.info('App initializing...')
 // middlewares
 app.use(json())
 app.use(urlencoded({ extended: true }))
@@ -37,6 +38,10 @@ app.use(session({
   store: sessionStorage,
 }))
 app.use(cookieParser(env.COOKIES_SECRET))
+
+logger.info('Db migrating...')
+// migration
+funct.migrateDatabase()
 
 // static files
 app.use(express.static(path.join(__dirname, '../static')))

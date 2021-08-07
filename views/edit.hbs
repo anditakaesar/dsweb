@@ -14,7 +14,7 @@
       <div class="mb-2">
         <label for="granteeName" class="form-label">Nomor</label>
         <div class="input-group">
-          <input type="text" class="form-control" id="numPrefix" placeholder="000">
+          <input type="text" class="form-control" id="numPrefix" placeholder="000" disabled readonly>
           <input type="text" class="form-control" id="numMiddle" placeholder="XX" value="/ST-DIR/" disabled readonly>
           <input type="text" class="form-control" id="numPostfix" placeholder="XX" disabled readonly>
           <input type="text" class="form-control" id="numYear" placeholder="YYYY" disabled readonly>
@@ -25,8 +25,16 @@
   <div class="row">
     <div class="col-lg-6">
       <div class="mb-2">
-        <label for="grantorName" class="form-label">Pejabat yang Berwenang Memberikan Izin</label>
-        <input type="text" class="form-control" id="grantorName">
+        <label for="grantorName" class="form-label">Pejabat dan Jabatan yang Berwenang Memberikan Izin</label>
+        <div class="input-group">
+          <input type="text" class="form-control" id="grantorName">
+          <select class="form-select" id="grantorPosition" placeholder="Jabatan">
+            <option disabled selected value>---Jabatan---</option>
+            {{#each data.position}}
+            <option value="{{{positionCode}}}">{{{positionName}}}</option>
+            {{/each}}
+          </select>
+        </div>
       </div>
       <div class="mb-2">
         <label for="granteeName" class="form-label">Nama dan Jabatan Diperintah</label>
@@ -49,6 +57,10 @@
         <input type="text" class="form-control" id="travelDestination">
       </div>
       <div class="mb-2">
+        <label for="travelVehicle" class="form-label">Alat Angkutan yang Digunakan</label>
+        <input type="text" class="form-control" id="travelVehicle">
+      </div>
+      <div class="mb-2" hidden>Alat Angkutan yang Digunakan
         <label for="travelType" class="form-label">Jenis Perjalanan Dinas</label>
         <input type="text" class="form-control" id="travelType">
       </div>
@@ -59,13 +71,13 @@
           <input type="text" class="form-control w-50" id="travelArrivalDate" placeholder="Tanggal">
         </div>
       </div>
-
-    </div>
-    <div class="col-lg-6">
       <div class="mb-2">
         <label for="travelReason" class="form-label">Maksud Perjalanan</label>
         <textarea type="text" class="form-control" id="travelReason" rows="3"></textarea>
       </div>
+
+    </div>
+    <div class="col-lg-6">
       <div class="mb-2">
         <label for="travelLengthType" class="form-label">Jarak</label>
         <select class="form-select" id="travelLengthType" placeholder="Jarak">
@@ -76,15 +88,19 @@
         </select>
       </div>
       <div class="mb-2">
-        <label for="travelDate" class="form-label">Tanggal Perjalanan Dinas</label>
-        <input type="text" class="form-control w-50" id="travelDate">
-      </div>
-      <div class="mb-2">
         <label for="travelLength" class="form-label">Lama Perjalanan</label>
         <div class="input-group w-50">
           <input type="text" class="form-control" id="travelLength">
           <div class="input-group-text">Hari</div>
         </div>
+      </div>
+      <div class="mb-2">
+        <label for="travelDate" class="form-label">Tanggal Berangkat</label>
+        <input type="text" class="form-control w-50" id="travelDate">
+      </div>
+      <div class="mb-2">
+        <label for="travelDateBack" class="form-label">Tanggal Kembali</label>
+        <input type="text" class="form-control w-50" id="travelDateBack">
       </div>
       <div class="mb-2">
         <label for="guarantorName" class="form-label">Penanggung Perjalanan Dinas</label>

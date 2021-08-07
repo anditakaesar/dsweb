@@ -4,10 +4,10 @@ const env = require('./dist/env').default
 const logger = require('./dist/logger').default
 
 app.listen(env.PORT, () => {
-  logger.info('env', process.env.NODE_ENV)
   if (env.NODE_ENV.includes('dev')) {
     logger.info('env', env)
   }
+  logger.info('App done initializing...', { env: env.NODE_ENV })
   console.log('app running at http://localhost:8000')
   console.log('CLOSE THIS WINDOW WHEN DONE')
 })

@@ -3,15 +3,18 @@ export default function FormatEntry(ent) {
   if (ent != undefined && ent != null) {
     newEntry.id = ent.id
     newEntry.grantorName = ent.grantorName
+    newEntry.grantorPosition = ent.grantorPosition
     newEntry.granteeName = ent.granteeName
     newEntry.granteePosition = ent.granteePosition
     newEntry.travelDeparture = ent.travelDeparture
     newEntry.travelDestination = ent.travelDestination
+    newEntry.travelVehicle = ent.travelVehicle
     newEntry.travelType = ent.travelType
     newEntry.travelReason = ent.travelReason
     newEntry.travelArrival = ent.travelArrival
     newEntry.travelArrivalDate = ent.travelArrivalDate
     newEntry.travelDate = ent.travelDate
+    newEntry.travelDateBack = ent.travelDateBack
     newEntry.travelLength = ent.travelLength
     newEntry.travelLengthType = ent.travelLengthType
     newEntry.guarantorName = ent.guarantorName

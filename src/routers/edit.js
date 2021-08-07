@@ -51,8 +51,8 @@ const getTravelType = (req, res, next) => {
     })
 }
 
-export const getPositionName = (entry, position = []) => {
-  let pos = position.find(p => p.positionCode == entry.granteePosition)
+export const getPositionName = (entry, fieldNames, position = []) => {
+  let pos = position.find(p => p.positionCode == entry[fieldNames])
   return pos ? pos.positionName : ""
 }
 
@@ -138,9 +138,11 @@ async function createPDF(entry, res) {
   let templateHtml = fs.readFileSync(path.join(process.cwd(), 'views', 'doc_template.hbs'), 'utf-8')
   let template = handlebars.compile(templateHtml)
   let loadedEntry = FormatEntry(entry)
-  loadedEntry.granteePosition = getPositionName(entry, res.data.position)
+  loadedEntry.grantorPosition = getPositionName(entry, 'grantorPosition', res.data.position)
+  loadedEntry.granteePosition = getPositionName(entry, 'granteePosition', res.data.position)
   loadedEntry.travelLengthType = getTravelTypeName(entry, res.data.travelType)
   loadedEntry.travelDate = formatDate(loadedEntry.travelDate)
+  loadedEntry.travelDateBack = formatDate(loadedEntry.travelDateBack)
   loadedEntry.travelArrivalDate = formatDate(loadedEntry.travelArrivalDate)
   let html = template(loadedEntry)
 
@@ -191,6 +193,13 @@ editRouter.get('/pdf/combined', getEntries, (req, res) => {
         })
         res.send(Buffer.from(merged, 'utf8'))
       })
+      .catch((err) => {
+        helper.logger.error(err.message, genError(err, req))
+        res.json({
+          message: 'error',
+          errmsg: err.message,
+        })
+      })
   })
 })
 
@@ -207,6 +216,13 @@ editRouter.get('/pdf/:id', (req, res) => {
               'Content-disposition': `inline; filename=${FormatPDFName(entry)}`
             })
             res.send(pdf)
+          })
+          .catch((err) => {
+            helper.logger.error(err.message, genError(err, req))
+            res.json({
+              message: 'error',
+              errmsg: err.message,
+            })
           })
 
       })
