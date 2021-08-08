@@ -66,9 +66,9 @@ const NewPrefix = (req, res, next) => {
 }
 
 entryRouter.post('/', NewPrefix, (req, res) => {
+  req.body.numPrefix = res.data.prefix
   let newEntry = FormatEntry(req.body)
   newEntry.userId = req.session.user.id
-  newEntry.numPrefix = res.data.prefix
   delete newEntry.id
   delete newEntry.empty
 
