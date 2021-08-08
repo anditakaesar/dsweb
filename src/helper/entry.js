@@ -23,7 +23,7 @@ export default function FormatEntry(ent) {
     newEntry.numMiddle = ent.numMiddle
     newEntry.numPostfix = ent.numPostfix
     newEntry.numYear = ent.numYear
-    newEntry.numCombined = (ent.numCombined == undefined || ent.numCombined == "") ? ent.numPrefix + ent.numMiddle + ent.numPostfix + ent.numYear : ent.numCombined
+    newEntry.numCombined = ent.numPrefix + ent.numMiddle + ent.numPostfix + ent.numYear
     newEntry.userId = ent.userId
     newEntry.empty = ''
   }
