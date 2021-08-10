@@ -8,8 +8,9 @@ import path from 'path'
 import moment from 'moment'
 import { Op } from 'sequelize'
 import { PDFDocument } from 'pdf-lib'
-import helper from '../helper'
+import helper, { APP_OPTIONS } from '../helper'
 import genError from '../helper/errorHelper'
+import axios from 'axios'
 
 const editRouter = Router()
 const { Entry, Position, TravelType } = db
@@ -134,7 +135,7 @@ editRouter.get('/list', (req, res) => {
   })
 })
 
-async function createPDF(entry, res) {
+function createBasePage(entry, res) {
   let templateHtml = fs.readFileSync(path.join(process.cwd(), 'views', 'doc_template.hbs'), 'utf-8')
   let template = handlebars.compile(templateHtml)
   let loadedEntry = FormatEntry(entry)
@@ -146,16 +147,33 @@ async function createPDF(entry, res) {
   loadedEntry.travelArrivalDate = formatDate(loadedEntry.travelArrivalDate)
   let html = template(loadedEntry)
 
-  const browser = await puppeteer.launch({ args: ['--no-sandbox'], headless: true })
-  let page = await browser.newPage();
-  await page.goto(`data:text/html;charset=UTF-8,${html}`, {
-    waitUntil: 'networkidle0'
-  })
+  return html
+}
 
-  const pdf = await page.pdf()
-  await browser.close()
+async function createPDF(entry, res) {
+  let html = createBasePage(entry, res)
 
-  return pdf
+  if (APP_OPTIONS.GENERATOR_URL_ACTIVE) {
+    let base64html = Buffer.from(html).toString('base64')
+
+    let response = await axios.post(APP_OPTIONS.GENERATOR_URL, {
+      html: base64html
+    })
+    let buff = Buffer.from(response.data, 'base64')
+    return buff
+
+  } else {
+    const browser = await puppeteer.launch({ args: ['--no-sandbox'], headless: true })
+    let page = await browser.newPage();
+    await page.goto(`data:text/html;charset=UTF-8,${html}`, {
+      waitUntil: 'networkidle0'
+    })
+  
+    const pdf = await page.pdf()
+    await browser.close()
+  
+    return pdf
+  }
 }
 
 async function mergePdf(entries = [], res) {
