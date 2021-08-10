@@ -15,7 +15,9 @@ import path from 'path'
 
 const APP_OPTIONS_FILE = JSON.parse(fs.readFileSync(path.join(__dirname, '../../app_options.json'), 'utf8'))
 export const APP_OPTIONS = {
-  PREFIX_ZEROS: APP_OPTIONS_FILE['PREFIX_ZEROS']
+  PREFIX_ZEROS: APP_OPTIONS_FILE['PREFIX_ZEROS'],
+  GENERATOR_URL_ACTIVE: APP_OPTIONS_FILE['GENERATOR_URL_ACTIVE'],
+  GENERATOR_URL: APP_OPTIONS_FILE['GENERATOR_URL']
 }
 
 const validValue = (val) => {

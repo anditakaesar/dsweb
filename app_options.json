@@ -1,3 +1,5 @@
 {
-  "PREFIX_ZEROS": "000"
+  "PREFIX_ZEROS": "000",
+  "GENERATOR_URL_ACTIVE": false,
+  "GENERATOR_URL": "http://localhost:3000"
 }
