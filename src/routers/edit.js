@@ -134,7 +134,7 @@ editRouter.get('/list', (req, res) => {
   })
 })
 
-async function createPDF(entry, res) {
+function createBasePage(entry, res) {
   let templateHtml = fs.readFileSync(path.join(process.cwd(), 'views', 'doc_template.hbs'), 'utf-8')
   let template = handlebars.compile(templateHtml)
   let loadedEntry = FormatEntry(entry)
@@ -145,6 +145,12 @@ async function createPDF(entry, res) {
   loadedEntry.travelDateBack = formatDate(loadedEntry.travelDateBack)
   loadedEntry.travelArrivalDate = formatDate(loadedEntry.travelArrivalDate)
   let html = template(loadedEntry)
+
+  return html
+}
+
+async function createPDF(entry, res) {
+  let html = createBasePage(entry, res)
 
   const browser = await puppeteer.launch({ args: ['--no-sandbox'], headless: true })
   let page = await browser.newPage();
